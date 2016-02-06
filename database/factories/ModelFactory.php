@@ -11,11 +11,25 @@
 |
 */
 
-$factory->define(CodePub\User::class, function (Faker\Generator $faker) {
+$factory->define(CodePub\Models\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(CodePub\Models\Permission::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word,
+        'description' => $faker->sentence,
+    ];
+});
+
+$factory->define(CodePub\Models\Role::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word,
+        'description' => $faker->sentence,
     ];
 });
