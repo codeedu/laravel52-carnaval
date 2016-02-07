@@ -33,3 +33,9 @@ $factory->define(CodePub\Models\Role::class, function (Faker\Generator $faker) {
         'description' => $faker->sentence,
     ];
 });
+
+$factory->define(CodePub\Models\Category::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word,
+    ];
+});

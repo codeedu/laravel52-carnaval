@@ -45,4 +45,38 @@ class User extends Authenticatable
         );
 
     }
+
+    public function revokeRole($role)
+    {
+        if (is_string($role)) {
+            return $this->roles()->detach(
+                Role::whereName($role)->firstOrFail()
+            );
+        }
+
+        return $this->roles()->detach($role);
+    }
+
+    public function hasRole($role)
+    {
+        if (is_string($role)) {
+            return $this->roles->contains('name', $role);
+        }
+
+        if(is_array($role)) {
+            foreach($role as $r) {
+                if($this->roles->contains('name', $r)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        return $role->intersect($this->roles)->count();
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('Admin');
+    }
 }

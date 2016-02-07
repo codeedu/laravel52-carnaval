@@ -11,6 +11,12 @@ use CodePub\Http\Controllers\Controller;
 
 class RolesController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorize('role_admin');
+    }
+
     public function index()
     {
         $roles = Role::all();

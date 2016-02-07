@@ -40,7 +40,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    CodePub
                 </a>
             </div>
 
@@ -48,6 +48,31 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
+                    @can('user_list')
+                    <li><a href="{{ route('admin.users.index') }}">Users</a></li>
+                    @endcan
+
+                    @can('category_list')
+                    <li><a href="{{ route('admin.categories.index') }}">Categories</a></li>
+                    @endcan
+
+                    @if(Gate::allows('role_admin') or Gate::allows('permission_admin'))
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Security <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            @can('role_admin')
+                            <li><a href="{{ route('admin.roles.index') }}"><i class="fa fa-btn fa-sign-out"></i>Roles</a></li>
+                            @endcan
+                            @can('permission_admin')
+                            <li><a href="{{ route('admin.permissions.index') }}"><i class="fa fa-btn fa-sign-out"></i>Permissions</a></li>
+                            @endcan
+                        </ul>
+                    </li>
+                        @endif
+
                 </ul>
 
                 <!-- Right Side Of Navbar -->
