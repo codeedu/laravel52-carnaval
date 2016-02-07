@@ -9,7 +9,9 @@
         {!! Form::open(['route'=>['admin.users.roles.store', $user->id]]) !!}
         <select name="role_id" class="form-control">
             @foreach($roles as $role)
-                <option value="{{$role->id}}">{{$role->name}}</option>
+                @if(!$user->hasRole($role->name))
+                    <option value="{{$role->id}}">{{$role->name}}</option>
+                @endif
             @endforeach
         </select>
         <br>
