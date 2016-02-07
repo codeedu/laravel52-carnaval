@@ -53,6 +53,12 @@ Route::group(['prefix'=>'admin', 'as'=>'admin.', 'middleware' => 'web'], functio
     Route::put('categories/update/{id}', ['as'=>'categories.update', 'uses'=>'Admin\CategoriesController@update']);
     Route::get('categories/destroy/{id}', ['as'=>'categories.destroy', 'uses'=>'Admin\CategoriesController@destroy']);
 
+    Route::get('books', ['as'=>'books.index', 'uses'=>'Admin\BooksController@index']);
+    Route::get('books/new', ['as'=>'books.create', 'uses'=>'Admin\BooksController@create']);
+    Route::post('books/store', ['as'=>'books.store', 'uses'=>'Admin\BooksController@store']);
+    Route::get('books/edit/{id}', ['as'=>'books.edit', 'uses'=>'Admin\BooksController@edit']);
+    Route::put('books/update/{id}', ['as'=>'books.update', 'uses'=>'Admin\BooksController@update']);
+    Route::get('books/destroy/{id}', ['as'=>'books.destroy', 'uses'=>'Admin\BooksController@destroy']);
     #Route::get('/home', 'HomeController@index');
 });
 

@@ -39,3 +39,18 @@ $factory->define(CodePub\Models\Category::class, function (Faker\Generator $fake
         'name' => $faker->word,
     ];
 });
+
+$factory->define(CodePub\Models\Book::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' => 1,
+        'category_id' => 1,
+        'title' => $faker->sentence,
+        'subtitle' => $faker->sentence,
+        'dedication' => $faker->sentence,
+        'description' => $faker->paragraph,
+        'website' => $faker->url,
+        'percent_complete' => rand(1, 100),
+        'price' => 100.76,
+        'published' => false
+    ];
+});

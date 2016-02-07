@@ -30,6 +30,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
+
     //$user->addRole('Admin')
     //$user->addRole($role);
     public function addRole($role)
