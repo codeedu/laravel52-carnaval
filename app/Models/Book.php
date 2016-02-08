@@ -4,7 +4,7 @@ namespace CodePub\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Book extends Model
+class Book extends Model implements BookInterface
 {
     protected $fillable = [
         'user_id',
@@ -27,5 +27,10 @@ class Book extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class);
     }
 }

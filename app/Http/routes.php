@@ -59,6 +59,19 @@ Route::group(['prefix'=>'admin', 'as'=>'admin.', 'middleware' => 'web'], functio
     Route::get('books/edit/{id}', ['as'=>'books.edit', 'uses'=>'Admin\BooksController@edit']);
     Route::put('books/update/{id}', ['as'=>'books.update', 'uses'=>'Admin\BooksController@update']);
     Route::get('books/destroy/{id}', ['as'=>'books.destroy', 'uses'=>'Admin\BooksController@destroy']);
+    Route::get('books/cover/{id}', ['as'=>'books.cover', 'uses'=>'Admin\BooksController@cover']);
+    Route::post('books/cover/{id}', ['as'=>'books.cover.store', 'uses'=>'Admin\BooksController@coverStore']);
+    Route::get('books/export/{id}', ['as'=>'books.export', 'uses'=>'Admin\BooksController@export']);
+
+
+    Route::group(['prefix'=>'books', 'as'=>'books.'], function () {
+        Route::get('{id}/chapters', ['as'=>'chapters.index', 'uses'=>'Admin\ChaptersController@index']);
+        Route::get('{id}/chapters/create', ['as'=>'chapters.create', 'uses'=>'Admin\ChaptersController@create']);
+        Route::post('{id}/chapters/store', ['as'=>'chapters.store', 'uses'=>'Admin\ChaptersController@store']);
+        Route::get('{id}/chapters/edit/{chapter_id}', ['as'=>'chapters.edit', 'uses'=>'Admin\ChaptersController@edit']);
+        Route::put('{id}/chapters/update/{chapter_id}', ['as'=>'chapters.update', 'uses'=>'Admin\ChaptersController@update']);
+        Route::get('{id}/chapters/destroy/{chapter_id}', ['as'=>'chapters.destroy', 'uses'=>'Admin\ChaptersController@destroy']);
+    });
     #Route::get('/home', 'HomeController@index');
 });
 

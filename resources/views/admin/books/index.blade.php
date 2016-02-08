@@ -27,6 +27,10 @@
                     Edit
                 </a>
 
+                    <a href="{{route('admin.books.chapters.index',['id'=>$book->id])}}" class="btn btn-default">
+                        Chapters
+                    </a>
+
                     <a href="{{route('admin.books.destroy',['id'=>$book->id])}}" class="btn btn-danger">
                         Destroy
                     </a>

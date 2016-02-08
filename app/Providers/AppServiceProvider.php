@@ -2,6 +2,8 @@
 
 namespace CodePub\Providers;
 
+use CodePub\Models\Book;
+use CodePub\Models\BookInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(BookInterface::class, Book::class);
     }
 }

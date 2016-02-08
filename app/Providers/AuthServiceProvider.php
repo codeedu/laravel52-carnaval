@@ -3,9 +3,11 @@
 namespace CodePub\Providers;
 
 use CodePub\Models\Book;
+use CodePub\Models\Chapter;
 use CodePub\Models\Permission;
 use CodePub\Models\User;
 use CodePub\Policies\BookPolicy;
+use CodePub\Policies\ChapterPolicy;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -18,7 +20,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'CodePub\Model' => 'CodePub\Policies\ModelPolicy',
-        Book::class => BookPolicy::class
+        Book::class => BookPolicy::class,
+        Chapter::class => ChapterPolicy::class
     ];
 
     /**

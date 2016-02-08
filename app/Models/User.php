@@ -68,14 +68,14 @@ class User extends Authenticatable
             return $this->roles->contains('name', $role);
         }
 
-        if(is_array($role)) {
-            foreach($role as $r) {
-                if($this->roles->contains('name', $r)) {
-                    return true;
-                }
-            }
-            return false;
-        }
+//        if(is_array($role)) {
+//            foreach($role as $r) {
+//                if($this->roles->contains('name', $r)) {
+//                    return true;
+//                }
+//            }
+//            return false;
+//        }
 
         return $role->intersect($this->roles)->count();
     }

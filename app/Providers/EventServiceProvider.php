@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'CodePub\Events\SomeEvent' => [
-            'CodePub\Listeners\EventListener',
+        'CodePub\Events\GenerateBook' => [
+            'CodePub\Listeners\ExportBook',
         ],
     ];
 

@@ -2,12 +2,15 @@
 
 namespace CodePub\Http\Controllers\Admin;
 
+use CodePub\Events\GenerateBook;
 use CodePub\Models\Book;
 use CodePub\Models\Category;
+use CodePub\Services\BookService;
 use Illuminate\Http\Request;
 
 use CodePub\Http\Requests;
 use CodePub\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 
 class BooksController extends Controller
@@ -73,4 +76,42 @@ class BooksController extends Controller
         return redirect()->route('admin.books.index');
     }
 
+    public function cover($id)
+    {
+        $book = Book::find($id);
+
+        if(Gate::denies('manage', $book)) {
+            abort(403,'You dont own this book');
+        }
+
+        return view('admin.books.cover',compact('book'));
+    }
+
+    public function coverStore(Request $request, $id)
+    {
+        $book = Book::find($id);
+
+        if(Gate::denies('manage', $book)) {
+            abort(403,'You dont own this book');
+        }
+
+        $bookService = app()->make(BookService::class);
+        $bookService->storeCover($book, $request->file('file'));
+
+        return redirect()->back();
+    }
+
+    public function export($id)
+    {
+        $book = Book::find($id);
+
+        if(Gate::denies('manage', $book)) {
+            abort(403,'You dont own this book');
+        }
+
+        for($i=0;$i<3;$i++) {
+            Event::fire(new GenerateBook($book));
+        }
+
+    }
 }
