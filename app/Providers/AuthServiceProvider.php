@@ -2,6 +2,7 @@
 
 namespace CodePub\Providers;
 
+
 use CodePub\Models\Book;
 use CodePub\Models\Chapter;
 use CodePub\Models\Permission;
@@ -10,6 +11,7 @@ use CodePub\Policies\BookPolicy;
 use CodePub\Policies\ChapterPolicy;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\App;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -34,11 +36,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        foreach($this->getPermissions() as $permission) {
-            $gate->define($permission->name, function($user) use($permission) {
-                return $user->hasRole($permission->roles) || $user->isAdmin();
-            });
+        if( !App::runningInConsole() ){
+            foreach($this->getPermissions() as $permission) {
+                $gate->define($permission->name, function($user) use($permission) {
+                    return $user->hasRole($permission->roles) || $user->isAdmin();
+                });
+            }
         }
+
     }
 
     public function getPermissions()
