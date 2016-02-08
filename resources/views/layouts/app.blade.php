@@ -48,6 +48,9 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
+                    @if (!Auth::guest())
+                        <li><a href="{{ route('admin.books.index') }}"><i class="fa fa-btn"></i>My Books</a></li>
+                    @endif
                     @can('user_list')
                     <li><a href="{{ route('admin.users.index') }}">Users</a></li>
                     @endcan
