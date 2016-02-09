@@ -5,6 +5,7 @@ namespace CodePub\Http\Controllers\Admin;
 use CodePub\Models\Permission;
 use CodePub\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Application as App;
 
 use CodePub\Http\Requests;
 use CodePub\Http\Controllers\Controller;
@@ -12,9 +13,11 @@ use CodePub\Http\Controllers\Controller;
 class RolesController extends Controller
 {
 
-    public function __construct()
+    public function __construct(App $app)
     {
-        $this->authorize('role_admin');
+         if( !$app->runningInConsole() ) {
+            $this->authorize('role_admin');
+        }
     }
 
     public function index()
