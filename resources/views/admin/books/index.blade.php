@@ -18,26 +18,40 @@
             </thead>
             <tbody>
             @foreach($books as $book)
-            <tr>
-                <td>{{$book->title}}</td>
-                <td>{{$book->author->name}}</td>
-                <td>
+                <tr>
+                    <td>{{$book->title}}</td>
+                    <td>{{$book->author->name}}</td>
+                    <td>
 
-                <a href="{{route('admin.books.edit',['id'=>$book->id])}}" class="btn btn-default">
-                    Edit
-                </a>
+                        <a href="{{route('admin.books.edit',['id'=>$book->id])}}" class="btn btn-default btn-sm">
+                            Edit
+                        </a>
 
-                    <a href="{{route('admin.books.chapters.index',['id'=>$book->id])}}" class="btn btn-default">
-                        Chapters
-                    </a>
+                        <a href="{{route('admin.books.cover',['id'=>$book->id])}}" class="btn btn-sm btn-default">
+                            Cover
+                        </a>
 
-                    <a href="{{route('admin.books.destroy',['id'=>$book->id])}}" class="btn btn-danger">
-                        Destroy
-                    </a>
+                        <a href="{{route('admin.books.chapters.index',['id'=>$book->id])}}" class="btn btn-sm btn-default">
+                            Chapters
+                        </a>
 
-                </td>
-            </tr>
-                @endforeach
+                        <a href="{{route('admin.books.export',['id'=>$book->id])}}" class="btn btn-sm btn-default">
+                            Export
+                        </a>
+
+                        @if(file_exists(storage_path("books/{$book->id}/book.zip")))
+                        <a href="{{route('admin.books.download',['id'=>$book->id])}}" class="btn btn-sm btn-primary">
+                            Download
+                        </a>
+                        @endif
+
+                        <a href="{{route('admin.books.destroy',['id'=>$book->id])}}" class="btn btn-sm btn-danger">
+                            Destroy
+                        </a>
+
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>

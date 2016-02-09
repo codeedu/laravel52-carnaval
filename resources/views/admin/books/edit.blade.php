@@ -5,7 +5,7 @@
     <div class="container">
         <h2>Editing book: {{$book->title}}</h2>
 
-        {!! Form::model($book, ['route'=>['admin.categories.update', $book->id], 'method'=>'put']) !!}
+        {!! Form::model($book, ['route'=>['admin.books.update', $book->id], 'method'=>'put']) !!}
 
         @include('admin.books._form')
 

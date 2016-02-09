@@ -5,3 +5,5 @@ Homestead.json
 .env
 .idea
 /easybook
+/public/books
+/storage/books

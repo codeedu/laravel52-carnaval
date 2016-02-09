@@ -8,7 +8,9 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "5.2.*",
-        "folklore/image": "0.3.*"
+        "folklore/image": "0.3.*",
+        "laravel/cashier": "~6.0",
+        "cviebrock/eloquent-sluggable": "^3.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

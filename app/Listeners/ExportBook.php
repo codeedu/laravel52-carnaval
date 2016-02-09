@@ -29,18 +29,17 @@ class ExportBook implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  GenerateBook  $event
+     * @param  GenerateBook $event
      * @return void
      */
     public function handle(GenerateBook $event)
     {
         $book = $event->book;
 
-            $this->bookService->export($book);
-            exec("php ".base_path("easybook/book publish {$book->id} print"));
-            exec("php ".base_path("easybook/book publish {$book->id} kindle"));
-            exec("php ".base_path("easybook/book publish {$book->id} ebook"));
-
-
+        $this->bookService->export($book);
+        exec("php " . base_path("easybook/book publish {$book->id} print"));
+        exec("php " . base_path("easybook/book publish {$book->id} kindle"));
+        exec("php " . base_path("easybook/book publish {$book->id} ebook"));
+        $this->bookService->compress($book);
     }
 }

@@ -157,6 +157,8 @@ return [
         CodePub\Providers\AuthServiceProvider::class,
         CodePub\Providers\EventServiceProvider::class,
         CodePub\Providers\RouteServiceProvider::class,
+        Laravel\Cashier\CashierServiceProvider::class,
+        Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
 
     ],
 

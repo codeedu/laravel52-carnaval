@@ -3,6 +3,7 @@
 namespace CodePub\Services;
 
 use CodePub\Models\BookInterface;
+use CodePub\Util\ExtendedZip;
 use Folklore\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -47,8 +48,12 @@ class BookService
         $img->writeImage(storage_path("books/{$book->id}/Resources/Templates/print/cover.pdf"));
 
         $thumbnail = \Image::open(storage_path("books/{$book->id}/Resources/Templates/ebook/cover.jpg"))
-            ->thumbnail(new Box(300, 300));
+            ->thumbnail(new Box(356, 522));
         $thumbnail->save(public_path("books/thumbs/{$book->id}.jpg"));
+
+        $thumbnail = \Image::open(storage_path("books/{$book->id}/Resources/Templates/ebook/cover.jpg"))
+            ->thumbnail(new Box(138, 230));
+        $thumbnail->save(public_path("books/thumbs/{$book->id}_small.jpg"));
     }
 
     public function export(BookInterface $book)
@@ -60,16 +65,26 @@ class BookService
 
         file_put_contents(storage_path("books/{$book->id}/Contents/dedication.md"), $book->dedication);
 
-        foreach($this->getChapters($book) as $chapter) {
+        foreach ($this->getChapters($book) as $chapter) {
             $ch['element'] = "chapter";
             $ch['number'] = $chapter->order;
-            $ch['content'] = $chapter->order.".md";
+            $ch['content'] = $chapter->order . ".md";
             array_push($config['book']['contents'], $ch);
         }
 
         $yml = $this->dumper->dump($config, 4);
 
         file_put_contents(storage_path("books/{$book->id}/config.yml"), $yml);
+    }
+
+    public function compress(BookInterface $book)
+    {
+        if (is_dir(storage_path("books/{$book->id}/Output"))) {
+            ExtendedZip::zipTree(storage_path("books/{$book->id}/Output"),
+                storage_path("books/{$book->id}/book.zip"),
+                ExtendedZip::CREATE
+            );
+        }
     }
 
     private function getChapters(BookInterface $book)

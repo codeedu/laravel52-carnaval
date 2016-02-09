@@ -17,7 +17,7 @@ class BooksController extends Controller
 {
     public function index()
     {
-        if(auth()->user()->can('book_manage_all')) {
+        if (auth()->user()->can('book_manage_all')) {
             $books = Book::all();
         } else {
             $books = Book::whereUserId(auth()->user()->id)->get();
@@ -44,20 +44,20 @@ class BooksController extends Controller
     {
         $book = Book::find($id);
 
-        if(Gate::denies('manage', $book)) {
-            abort(403,'You dont own this book');
+        if (Gate::denies('manage', $book)) {
+            abort(403, 'You dont own this book');
         }
 
         $categories = Category::lists('name', 'id');
-        return view('admin.books.edit', compact('book','categories'));
+        return view('admin.books.edit', compact('book', 'categories'));
     }
 
     public function update(Request $request, $id)
     {
         $book = Book::find($id);
 
-        if(Gate::denies('manage', $book)) {
-            abort(403,'You dont own this book');
+        if (Gate::denies('manage', $book)) {
+            abort(403, 'You dont own this book');
         }
 
         $book->update($request->all());
@@ -68,8 +68,8 @@ class BooksController extends Controller
     {
         $book = Book::find($id);
 
-        if(Gate::denies('manage', $book)) {
-            abort(403,'You dont own this book');
+        if (Gate::denies('manage', $book)) {
+            abort(403, 'You dont own this book');
         }
 
         $book->delete();
@@ -80,19 +80,19 @@ class BooksController extends Controller
     {
         $book = Book::find($id);
 
-        if(Gate::denies('manage', $book)) {
-            abort(403,'You dont own this book');
+        if (Gate::denies('manage', $book)) {
+            abort(403, 'You dont own this book');
         }
 
-        return view('admin.books.cover',compact('book'));
+        return view('admin.books.cover', compact('book'));
     }
 
     public function coverStore(Request $request, $id)
     {
         $book = Book::find($id);
 
-        if(Gate::denies('manage', $book)) {
-            abort(403,'You dont own this book');
+        if (Gate::denies('manage', $book)) {
+            abort(403, 'You dont own this book');
         }
 
         $bookService = app()->make(BookService::class);
@@ -105,13 +105,27 @@ class BooksController extends Controller
     {
         $book = Book::find($id);
 
-        if(Gate::denies('manage', $book)) {
-            abort(403,'You dont own this book');
+        if (Gate::denies('manage', $book)) {
+            abort(403, 'You dont own this book');
         }
 
-        for($i=0;$i<3;$i++) {
-            Event::fire(new GenerateBook($book));
+        Event::fire(new GenerateBook($book));
+
+        return redirect()->route('admin.books.index');
+    }
+
+    public function download($id)
+    {
+        $book = Book::find($id);
+
+        if (Gate::denies('manage', $book)) {
+            abort(403, 'You dont own this book');
         }
 
+        if(file_exists(storage_path("books/{$book->id}/book.zip"))) {
+            return response()->download(storage_path("books/{$book->id}/book.zip"));
+        }
+
+        return redirect()->route('admin.books.index');
     }
 }
