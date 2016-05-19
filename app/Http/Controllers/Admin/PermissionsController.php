@@ -4,15 +4,21 @@ namespace CodePub\Http\Controllers\Admin;
 
 use CodePub\Models\Permission;;
 use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\App;
+use Illuminate\Foundation\Application as App;
+
 
 use CodePub\Http\Requests;
 use CodePub\Http\Controllers\Controller;
 
 class PermissionsController extends Controller
 {
-    public function __construct()
+    public function __construct(App $app)
     {
-        $this->authorize('permission_admin');
+        if( !$app->runningInConsole() )
+        {
+            $this->authorize('permission_admin');
+        }
     }
     public function index()
     {
